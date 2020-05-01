@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "2020-05-01-testing-my-blog"
+title:  "testing-my-blog"
 date:   2020-05-01 18:15:54
 categories: testing
 tags: testing
