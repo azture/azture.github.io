@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "testing-my-blog"
+title:  "Testing-my-blog"
 date:   2020-05-01 18:15:54
-categories: testing
-tags: testing
+categories: Testing
+tags: Testing
 ---
 
 * content
