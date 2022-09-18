@@ -336,7 +336,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -422,8 +422,8 @@
 </ul>
 <h4 id="Type（类型）"><a href="#Type（类型）" class="headerlink" title="Type（类型）"></a>Type（类型）</h4><p>在 Index（索引）中，可以定义一个或多个类型。<br>类似于 MySQL 的 Table，每一种类&nbsp; &nbsp;&nbsp;型的数据存放在一起。<br>​</p>
 <p><strong>在Elasticsearch6.0之后，Type 类型被移除。</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/22150398/1626588129946-3273201b-00b9-47b8-9907-fff739d0f5dc.png#id=AQytJ&amp;originHeight=972&amp;originWidth=2045&amp;originalType=binary&amp;ratio=1&amp;status=done&amp;style=none"><br><strong>​</strong></p>
-<h4 id="Document（文档）"><a href="#Document（文档）" class="headerlink" title="Document（文档）"></a>Document（文档）</h4><p>保存在某个 Index（索引）下，某种 Type（类型）的一个数据，Document（文档）是JSON格式的，Document 就像是 MySQL 中某个 Table 里面每一行的数据，字段就是Document里的属性。<br><img src="/Elastisearch%5C1615294408106-bc6b3dc3-1630-4b03-920d-0bf163926461.png"></p>
-<h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h4><p><img src="/Elastisearch%5C1626588226963-e7ef57d3-dac5-4396-a2c0-34a2936e0bd1.png"></p>
+<h4 id="Document（文档）"><a href="#Document（文档）" class="headerlink" title="Document（文档）"></a>Document（文档）</h4><p>保存在某个 Index（索引）下，某种 Type（类型）的一个数据，Document（文档）是JSON格式的，Document 就像是 MySQL 中某个 Table 里面每一行的数据，字段就是Document里的属性。<br><img src="/2022/09/18/elastisearch/1615294408106-bc6b3dc3-1630-4b03-920d-0bf163926461.png"></p>
+<h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h4><p><img src="/2022/09/18/elastisearch/1626588226963-e7ef57d3-dac5-4396-a2c0-34a2936e0bd1.png"></p>
 <h3 id="Docker安装Elasticsearch、Kibana"><a href="#Docker安装Elasticsearch、Kibana" class="headerlink" title="Docker安装Elasticsearch、Kibana"></a>Docker安装Elasticsearch、Kibana</h3><h4 id="下载镜像文件"><a href="#下载镜像文件" class="headerlink" title="下载镜像文件"></a>下载镜像文件</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 存储和检索数据</span>
 <span class="token function">docker</span> pull elasticsearch:7.4.2
 
@@ -458,7 +458,7 @@
 <li><code>-v</code>：挂载容器中的配置文件、数据文件、插件数据到本机的文件夹；</li>
 <li><code>-d elasticsearch:7.6.2</code>：指定要启动的镜像</li>
 </ul>
-<p>访问 IP:9200 看到返回的 json 数据说明启动成功。<br><img src="/Elastisearch%5C1626588468166-66d6af6c-907c-47c5-9fef-5a2bbd9f99a8.png" alt="image.png"></p>
+<p>访问 IP:9200 看到返回的 json 数据说明启动成功。<br><img src="/2022/09/18/elastisearch/1626588468166-66d6af6c-907c-47c5-9fef-5a2bbd9f99a8.png" alt="image.png"></p>
 <h4 id="设置-Elasticsearch-随Docker启动"><a href="#设置-Elasticsearch-随Docker启动" class="headerlink" title="设置 Elasticsearch 随Docker启动"></a>设置 Elasticsearch 随Docker启动</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 当前 Docker 开机自启，所以 ES 现在也是开机自启</span>
 <span class="token function">docker</span> update elasticsearch <span class="token parameter variable">--restart</span><span class="token operator">=</span>always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -466,7 +466,7 @@
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">ELASTICSEARCH_HOSTS</span><span class="token operator">=</span>http://192.168.200.130:9200 <span class="token punctuation">\</span>
 <span class="token parameter variable">-p</span> <span class="token number">5601</span>:5601 <span class="token punctuation">\</span>
 <span class="token parameter variable">-d</span> kibana:7.4.2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>-e ELASTICSEARCH_HOSTS=``http://192.168.200.130:9200</code>: <strong>这里要设置成自己的虚拟机IP地址</strong><br><strong>浏览器输入</strong><a target="_blank" rel="noopener" href="http://192.168.163.131:5601/">http://192.168.163.131:5601</a> 测试：<br><img src="/Elastisearch%5C1626588574414-48415a76-1589-4282-bd81-392720e3942e.png" alt="image.png"></p>
+<p><code>-e ELASTICSEARCH_HOSTS=``http://192.168.200.130:9200</code>: <strong>这里要设置成自己的虚拟机IP地址</strong><br><strong>浏览器输入</strong><a target="_blank" rel="noopener" href="http://192.168.163.131:5601/">http://192.168.163.131:5601</a> 测试：<br><img src="/2022/09/18/elastisearch/1626588574414-48415a76-1589-4282-bd81-392720e3942e.png" alt="image.png"></p>
 <h4 id="设置-Kibana-随Docker启动"><a href="#设置-Kibana-随Docker启动" class="headerlink" title="设置 Kibana 随Docker启动"></a>设置 Kibana 随Docker启动</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 当前 Docker 开机自启，所以 kibana 现在也是开机自启</span>
 <span class="token function">docker</span> update kibana <span class="token parameter variable">--restart</span><span class="token operator">=</span>always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -475,13 +475,13 @@
 
 
 <h2 id="Elasticsearch-使用入门"><a href="#Elasticsearch-使用入门" class="headerlink" title="Elasticsearch 使用入门"></a>Elasticsearch 使用入门</h2><p>前面介绍说，Elasticsearch 都是通过 REST API 接口来操作数据的，那么下面接通过几个接口的请求来演示它的使用。（当前虚拟机IP为192.168.200.130）</p>
-<h3 id="cat"><a href="#cat" class="headerlink" title="_cat"></a>_cat</h3><h4 id="GET-cat-nodes：查看所有节点"><a href="#GET-cat-nodes：查看所有节点" class="headerlink" title="GET /_cat/nodes：查看所有节点"></a><code>GET</code> <code>/_cat/nodes</code>：查看所有节点</h4><p><img src="/Elastisearch%5C1626589153553-26af764e-c9fc-40cd-9737-da3d181cba8a.png" alt="image.png"></p>
-<h4 id="GET-cat-health：查看-es-健康状况"><a href="#GET-cat-health：查看-es-健康状况" class="headerlink" title="GET /_cat/health：查看 es 健康状况"></a><code>GET</code> <code>/_cat/health</code>：查看 es 健康状况</h4><p><img src="/Elastisearch%5C1626589224636-8839a721-4c0f-44e0-a69c-245ec59385e6.png" alt="image.png"></p>
-<h4 id="GET-cat-master：查看主节点"><a href="#GET-cat-master：查看主节点" class="headerlink" title="GET /_cat/master：查看主节点"></a><code>GET</code> <code>/_cat/master</code>：查看主节点</h4><p><img src="/Elastisearch%5C1626589296573-71e82e45-2a14-491b-b861-139d8dc3ea9e.png" alt="image.png"></p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="_cat"></a>_cat</h3><h4 id="GET-cat-nodes：查看所有节点"><a href="#GET-cat-nodes：查看所有节点" class="headerlink" title="GET /_cat/nodes：查看所有节点"></a><code>GET</code> <code>/_cat/nodes</code>：查看所有节点</h4><p><img src="/2022/09/18/elastisearch/1626589153553-26af764e-c9fc-40cd-9737-da3d181cba8a.png" alt="image.png"></p>
+<h4 id="GET-cat-health：查看-es-健康状况"><a href="#GET-cat-health：查看-es-健康状况" class="headerlink" title="GET /_cat/health：查看 es 健康状况"></a><code>GET</code> <code>/_cat/health</code>：查看 es 健康状况</h4><p><img src="/2022/09/18/elastisearch/1626589224636-8839a721-4c0f-44e0-a69c-245ec59385e6.png" alt="image.png"></p>
+<h4 id="GET-cat-master：查看主节点"><a href="#GET-cat-master：查看主节点" class="headerlink" title="GET /_cat/master：查看主节点"></a><code>GET</code> <code>/_cat/master</code>：查看主节点</h4><p><img src="/2022/09/18/elastisearch/1626589296573-71e82e45-2a14-491b-b861-139d8dc3ea9e.png" alt="image.png"></p>
 <h4 id="GET-cat-indices：查看所有索引"><a href="#GET-cat-indices：查看所有索引" class="headerlink" title="GET /_cat/indices：查看所有索引"></a><code>GET</code> <code>/_cat/indices</code>：查看所有索引</h4><blockquote>
 <p>等价于 mysql 数据库的 <code>show databases</code>;</p>
 </blockquote>
-<p><img src="/Elastisearch%5C1626589368633-23c23310-96f1-4731-8cd2-50b21659e848.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626589368633-23c23310-96f1-4731-8cd2-50b21659e848.png" alt="image.png"></p>
 <h3 id="添加文档"><a href="#添加文档" class="headerlink" title="添加文档"></a>添加文档</h3><p>保存一个数据，保存在哪个索引的哪个类型下，指定用哪个唯一标识</p>
 <h4 id="PUT-请求"><a href="#PUT-请求" class="headerlink" title="PUT 请求"></a>PUT 请求</h4><p>接口格式：<code>/{index}/{type}/{id}</code><br>请求体：<code>一串JSON数据</code></p>
 <blockquote>
@@ -491,7 +491,7 @@
 <blockquote>
 <p>  PS：<code>PUT在REST风格中应该是修改操作, 由于我们发送的数据目前是不存在的, 因此是created操作, 后续再次发送这个请求, 将会是updated操作</code><br>   <code>PUT可以新增也可以修改。PUT必须指定id；由于PUT需要指定id，我们一般用来做修改操作，不指定id会报错。</code></p>
 </blockquote>
-<p><img src="/Elastisearch%5C1626594250686-e74066b9-f89b-470c-a795-5ad20d6bbdc9.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626594250686-e74066b9-f89b-470c-a795-5ad20d6bbdc9.png" alt="image.png"></p>
 <h4 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h4><p>接口格式：<code>/{index}/{type}</code><br>请求体：<code>一串JSON数据</code></p>
 <blockquote>
 <p>示例</p>
@@ -500,12 +500,12 @@
 <blockquote>
 <p>  PS：<code>POST新增, 如果不指定id, 会自动生成id; 指定id就会修改这个数据, 并修改版本号</code></p>
 </blockquote>
-<p><img src="/Elastisearch%5C1626594540023-54232242-0583-4cb9-9c1b-bbd128d3d776.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626594540023-54232242-0583-4cb9-9c1b-bbd128d3d776.png" alt="image.png"></p>
 <h3 id="查询文档"><a href="#查询文档" class="headerlink" title="查询文档"></a>查询文档</h3><h4 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h4><p>接口格式：<code>/{index}/{type}/{id}</code></p>
 <blockquote>
 <p>示例</p>
 </blockquote>
-<p>接口：<code>GET</code> <code>/customer/external/1</code><br><img src="/Elastisearch%5C1626594893602-8bf77137-d06a-4bb3-b515-ea5dfaa2fbe1.png" alt="image.png"></p>
+<p>接口：<code>GET</code> <code>/customer/external/1</code><br><img src="/2022/09/18/elastisearch/1626594893602-8bf77137-d06a-4bb3-b515-ea5dfaa2fbe1.png" alt="image.png"></p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"_index"</span><span class="token operator">:</span> <span class="token string">"customer"</span><span class="token punctuation">,</span>  # 在哪个索引(库)
     <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"external"</span><span class="token punctuation">,</span>   # 在哪个类型(表)
@@ -524,8 +524,8 @@
 
 
 <h3 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h3><h4 id="POST-请求-1"><a href="#POST-请求-1" class="headerlink" title="POST 请求"></a>POST 请求</h4><p>接口格式：<code>/{index}/{type}/{id}/_update</code><br>请求体：<code>{ "doc": { "key": "value" } }</code></p>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>接口：<code>POST</code> <code>/customer/external/1/_update</code><br>请求体：<code>{ "doc": { "name": "Tom" } }</code><br><code>version: 版本号加一</code>，<code>result: updated(修改指令)</code><br><img src="/Elastisearch%5C1626595695592-89e72bb7-fde1-4761-b758-b75fad18dbf6.png" alt="image.png"></p>
-<h5 id="再发送一次相同的请求"><a href="#再发送一次相同的请求" class="headerlink" title="再发送一次相同的请求"></a>再发送一次相同的请求</h5><p>版本号没有发送改变，<code>result：noop ( 空操作 )</code>，<code>_seq_no 也没有发送变化</code>。<br><img src="/Elastisearch%5C1626595779134-63c1c204-4cce-4382-81cb-2d0b0aed68fa.png" alt="image.png"></p>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>接口：<code>POST</code> <code>/customer/external/1/_update</code><br>请求体：<code>{ "doc": { "name": "Tom" } }</code><br><code>version: 版本号加一</code>，<code>result: updated(修改指令)</code><br><img src="/2022/09/18/elastisearch/1626595695592-89e72bb7-fde1-4761-b758-b75fad18dbf6.png" alt="image.png"></p>
+<h5 id="再发送一次相同的请求"><a href="#再发送一次相同的请求" class="headerlink" title="再发送一次相同的请求"></a>再发送一次相同的请求</h5><p>版本号没有发送改变，<code>result：noop ( 空操作 )</code>，<code>_seq_no 也没有发送变化</code>。<br><img src="/2022/09/18/elastisearch/1626595779134-63c1c204-4cce-4382-81cb-2d0b0aed68fa.png" alt="image.png"></p>
 <h4 id="几种更新文档的区别"><a href="#几种更新文档的区别" class="headerlink" title="几种更新文档的区别"></a>几种更新文档的区别</h4><p>在上面添加文档的时候介绍的两种更新文档的方式和更新文档的一种方式中，一共3种方式</p>
 <ul>
 <li>当PUT请求带id，且有该id数据存在时，会更新文档；</li>
@@ -542,12 +542,12 @@
 <blockquote>
 <p>示例</p>
 </blockquote>
-<p>接口：<code>DELTE</code> <code>/customer/external/1</code><br><img src="/Elastisearch%5C1626597004018-63da8827-60a4-4be4-8877-37e76e2fb620.png" alt="image.png"></p>
+<p>接口：<code>DELTE</code> <code>/customer/external/1</code><br><img src="/2022/09/18/elastisearch/1626597004018-63da8827-60a4-4be4-8877-37e76e2fb620.png" alt="image.png"></p>
 <h4 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h4><h5 id="DELETE请求-1"><a href="#DELETE请求-1" class="headerlink" title="DELETE请求"></a>DELETE请求</h5><p>接口格式：<code>/{index}</code></p>
 <blockquote>
 <p>示例</p>
 </blockquote>
-<p>接口：<code>DELETE</code> <code>/customer</code><br><img src="/Elastisearch%5C1626597161683-f52594ad-d05f-4300-9060-01ff05ea8a49.png" alt="image.png"></p>
+<p>接口：<code>DELETE</code> <code>/customer</code><br><img src="/2022/09/18/elastisearch/1626597161683-f52594ad-d05f-4300-9060-01ff05ea8a49.png" alt="image.png"></p>
 <h3 id="bulk-批量操作数据"><a href="#bulk-批量操作数据" class="headerlink" title="bulk 批量操作数据"></a>bulk 批量操作数据</h3><blockquote>
 <p>语法格式</p>
 </blockquote>
@@ -564,14 +564,14 @@
 <span class="token punctuation">{</span><span class="token property">"index"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"2"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"John Doe"</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/Elastisearch%5C1626598109993-ba5860e0-c445-47fa-b86c-3a94ac15eb5f.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626598109993-ba5860e0-c445-47fa-b86c-3a94ac15eb5f.png" alt="image.png"></p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json">POST /customer/external/_bulk
 <span class="token punctuation">{</span><span class="token property">"index"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"1"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"John Doe"</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"index"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"2"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"John Doe"</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/Elastisearch%5C1626598285366-ad7e0d80-a279-41e0-94f9-c8c06a5b3684.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626598285366-ad7e0d80-a279-41e0-94f9-c8c06a5b3684.png" alt="image.png"></p>
 <h4 id="对所有索引执行批量操作"><a href="#对所有索引执行批量操作" class="headerlink" title="对所有索引执行批量操作"></a>对所有索引执行批量操作</h4><p>接口：<code>POST</code> <code>/_bulk</code><br>参数：</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"delete"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"website"</span><span class="token punctuation">,</span><span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"blog"</span><span class="token punctuation">,</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"123"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"create"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"website"</span><span class="token punctuation">,</span><span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"blog"</span><span class="token punctuation">,</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"123"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
@@ -581,14 +581,14 @@
 <span class="token punctuation">{</span><span class="token property">"update"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"website"</span><span class="token punctuation">,</span><span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"blog"</span><span class="token punctuation">,</span><span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"123"</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
 <span class="token punctuation">{</span><span class="token property">"doc"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"title"</span><span class="token operator">:</span><span class="token string">"my updated blog post"</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/Elastisearch%5C1626598543787-9da7f847-3d37-4c5b-8a75-75c744171eb3.png" alt="image.png"></p>
+<p><img src="/2022/09/18/elastisearch/1626598543787-9da7f847-3d37-4c5b-8a75-75c744171eb3.png" alt="image.png"></p>
 <ul>
 <li>这里的批量操作，当发生某一条执行发生失败时，其他的数据仍然能够接着执行，也就是说彼此之间是独立的。</li>
 <li>bulk api以此按顺序执行所有的action（动作）。如果一个单个的动作因任何原因失败，它将继续处理它后面剩余的动作。</li>
 <li>当bulk api返回时，它将提供每个动作的状态（与发送的顺序相同），所以您可以检查是否一个指定的动作是否失败了。</li>
 </ul>
 <h2 id="Elasticsearch-检索进阶"><a href="#Elasticsearch-检索进阶" class="headerlink" title="Elasticsearch 检索进阶"></a>Elasticsearch 检索进阶</h2><p>本节参考 <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-search.html">官方文档</a> 检索示例：</p>
-<h3 id="导入样本测试数据"><a href="#导入样本测试数据" class="headerlink" title="导入样本测试数据"></a>导入样本测试数据</h3><p><a target="_blank" rel="noopener" href="https://gitee.com/xlh_blog/common_content/blob/master/es%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.json">https://gitee.com/xlh_blog/common_content/blob/master/es%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.json</a><br><code>POST /bank/account/_bulk</code><br><img src="/Elastisearch%5C1626603899455-9ceed582-42fc-429b-89d7-f954078f7ed2.png" alt="image.png"><br>测试数据样本模板</p>
+<h3 id="导入样本测试数据"><a href="#导入样本测试数据" class="headerlink" title="导入样本测试数据"></a>导入样本测试数据</h3><p><a target="_blank" rel="noopener" href="https://gitee.com/xlh_blog/common_content/blob/master/es%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.json">https://gitee.com/xlh_blog/common_content/blob/master/es%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.json</a><br><code>POST /bank/account/_bulk</code><br><img src="/2022/09/18/elastisearch/1626603899455-9ceed582-42fc-429b-89d7-f954078f7ed2.png" alt="image.png"><br>测试数据样本模板</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"account_number"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
     <span class="token property">"balance"</span><span class="token operator">:</span> <span class="token number">39225</span><span class="token punctuation">,</span>
@@ -2443,7 +2443,7 @@ elasticsearch-plugin list
 
 <h4 id="测试-nginx"><a href="#测试-nginx" class="headerlink" title="测试 nginx"></a>测试 nginx</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">'&lt;h1&gt;GuliMall&lt;/h1&gt;'</span> <span class="token operator">&gt;</span>/mydata/nginx/html/index.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>浏览器访问 <a target="_blank" rel="noopener" href="http://192.168.163.131/">http://192.168.200.130/</a> 可以看到下面内容说明安装成功<br><img src="/Elastisearch%5C1626697161531-b57b1ab2-ff1a-40ff-8a63-df036b35571a.png" alt="image.png"></p>
+<p>浏览器访问 <a target="_blank" rel="noopener" href="http://192.168.163.131/">http://192.168.200.130/</a> 可以看到下面内容说明安装成功<br><img src="/2022/09/18/elastisearch/1626697161531-b57b1ab2-ff1a-40ff-8a63-df036b35571a.png" alt="image.png"></p>
 <h2 id="Elasticsearch-项目整合"><a href="#Elasticsearch-项目整合" class="headerlink" title="Elasticsearch 项目整合"></a>Elasticsearch 项目整合</h2><h3 id="Elasticsearch-Rest-Client"><a href="#Elasticsearch-Rest-Client" class="headerlink" title="Elasticsearch-Rest-Client"></a>Elasticsearch-Rest-Client</h3><h4 id="通过-9300-TCP"><a href="#通过-9300-TCP" class="headerlink" title="通过 9300: TCP"></a>通过 9300: TCP</h4><ul>
 <li>spring-data-elasticsearch:transport-api.jar;<ul>
 <li>springboot版本不同，ransport-api.jar不同，不能适配es版本</li>
@@ -2458,7 +2458,7 @@ elasticsearch-plugin list
 <li>Elasticsearch-Rest-Client：官方RestClient，封装了ES操作，API层次分明，上手简单；</li>
 </ul>
 <p>最终选择 Elasticsearch-Rest-Client（elasticsearch-rest-high-level-client）； <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html">https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html</a><br>​</p>
-<h3 id="创建-Elasticsearch-检索服务模块"><a href="#创建-Elasticsearch-检索服务模块" class="headerlink" title="创建 Elasticsearch 检索服务模块"></a>创建 Elasticsearch 检索服务模块</h3><h4 id="新建模块"><a href="#新建模块" class="headerlink" title="新建模块"></a>新建模块</h4><p><img src="/Elastisearch%5C1626685660252-c13899bd-c384-441e-87e6-1dc2370d02e9.png" alt="image.png"><br><img src="/Elastisearch%5C1626685737535-5b347ac9-78cc-49ff-b7ee-eb7a95c98231.png" alt="image.png"><br>​</p>
+<h3 id="创建-Elasticsearch-检索服务模块"><a href="#创建-Elasticsearch-检索服务模块" class="headerlink" title="创建 Elasticsearch 检索服务模块"></a>创建 Elasticsearch 检索服务模块</h3><h4 id="新建模块"><a href="#新建模块" class="headerlink" title="新建模块"></a>新建模块</h4><p><img src="/2022/09/18/elastisearch/1626685660252-c13899bd-c384-441e-87e6-1dc2370d02e9.png" alt="image.png"><br><img src="/2022/09/18/elastisearch/1626685737535-5b347ac9-78cc-49ff-b7ee-eb7a95c98231.png" alt="image.png"><br>​</p>
 <h4 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h4><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>java.version</span><span class="token punctuation">&gt;</span></span>1.8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>java.version</span><span class="token punctuation">&gt;</span></span>
   <span class="token comment">&lt;!-- SpringBoot管理了elasticsearch的版本, 所以我们需要重写这个版本, 安装的elasticsearch的版本需要与jar包版本一致 --&gt;</span>
@@ -2888,7 +2888,7 @@ elasticsearch-plugin list
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Go协程">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Go协程">
                         
                         <span class="card-title">Go协程</span>
                     </div>
@@ -3412,6 +3412,8 @@ $(function () {
 
     
 
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
     
 
     
