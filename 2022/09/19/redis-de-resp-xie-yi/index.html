@@ -4,9 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Go协程, Azture&#39;Blog">
-    <meta name="description" content="　对于 进程、线程，都是有内核进行调度，有 CPU 时间片的概念，进行 抢占式调度（有多种调度算法）
-对于 协程(用户级线程)，这是对内核透明的，也就是系统并不知道有协程的存在，是完全由用户自己的程序进行调度的，因为是由用户程序自己控制，那">
+    <meta name="keywords" content="redis的RESP协议, Azture&#39;Blog">
+    <meta name="description" content="简介Redis 的客户端和服务端之间采取了一种独立名为 RESP(REdis Serialization Protocol) 的协议，作者主要考虑了以下几个点：
+
+容易实现
+解析快
+人类可读
+
+注意：RESP 虽然是为 Redis 设计的，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +23,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Go协程 | Azture&#39;Blog</title>
+    <title>redis的RESP协议 | Azture&#39;Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +342,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Go协程</h1>
+                    <h1 class="description center-align post-title">redis的RESP协议</h1>
                 </div>
             </div>
         </div>
@@ -364,25 +369,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Go-%E5%8D%8F%E7%A8%8B/">
-                                <span class="chip bg-color">Go 协程</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Go/" class="post-category">
-                                Go
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -391,7 +383,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-18
+                    2022-09-19
                 </div>
                 
 
@@ -415,74 +407,134 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>　对于 <strong>进程、线程</strong>，都是有内核进行调度，有 CPU 时间片的概念，进行 <strong>抢占式调度</strong>（有多种调度算法）</p>
-<p>对于 <strong>协程</strong>(用户级线程)，这是对内核透明的，也就是系统并不知道有协程的存在，是完全由用户自己的程序进行调度的，因为是由用户程序自己控制，那么就很难像抢占式调度那样做到强制的 CPU 控制权切换到其他进程/线程，通常只能进行 <strong>协作式调度</strong>，需要协程自己主动把控制权转让出去之后，其他协程才能被执行到。</p>
-<p><strong>goroutine 和协程区别</strong></p>
-<p><strong>本质上，goroutine 就是协程。</strong> 不同的是，Golang 在 runtime、系统调用等多方面对 goroutine 调度进行了封装和处理，当遇到长时间执行或者进行系统调用时，会主动把当前 goroutine 的CPU (P) 转让出去，让其他 goroutine 能被调度并执行</p>
-<h3 id="协程底层实现原理"><a href="#协程底层实现原理" class="headerlink" title="协程底层实现原理"></a>协程底层实现原理</h3><p>协程，是在应用层模拟的线程，他避免了上下文切换的额外耗费，兼顾了多线程的优点</p>
-<p>当 a线程 切换到 b线程 的时候，需要将 a线程 的相关执行进度压入栈，然后将 b线程 的执行进度出栈，进入 b线程 的执行序列。协程只不过是在 应用层 实现这一点。</p>
-<p>协程是基于线程的。内部实现上，维护了一组数据结构和 n 个线程，真正的执行还是线程，协程执行的代码被扔进一个待执行队列中，由这 n 个线程从队列中拉出来执行。</p>
-<pre class="line-numbers language-none"><code class="language-none">1. 协程调度机制无法实现公平调度
-2. 协程的资源开销是非常低的，一台普通的服务器就可以支持百万协程。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Redis 的客户端和服务端之间采取了一种独立名为 RESP(REdis Serialization Protocol) 的协议，作者主要考虑了以下几个点：</p>
+<ul>
+<li>容易实现</li>
+<li>解析快</li>
+<li>人类可读</li>
+</ul>
+<p>注意：RESP 虽然是为 Redis 设计的，但是同样也可以用于其他 C/S 的软件。</p>
+<h1 id="数据类型及示例"><a href="#数据类型及示例" class="headerlink" title="数据类型及示例"></a>数据类型及示例</h1><p>RESP 主要可以序列化以下几种类型：整数，单行回复(简单字符串)，数组，错误信息，多行字符串。Redis 客户端向服务端发送的是一组由执行的命令组成的字符串数组，服务端根据不同的命令回复不同类型的数据，但协议的每部分都是以 “\r\n” (CRLF) 结尾的。另外 RESP 是二进制安全的，不需要处理从一个进程到另一个进程的传输，因为它使用了前缀长度进行传输。</p>
+<p>在 RESP 中, 一些数据的类型通过它的第一个字节进行判断：</p>
+<ul>
+<li>单行回复：回复的第一个字节是 “+”</li>
+<li>错误信息：回复的第一个字节是 “-“</li>
+<li>整形数字：回复的第一个字节是 “:”</li>
+<li>多行字符串：回复的第一个字节是 “$”</li>
+<li>数组：回复的第一个字节是 “*”</li>
+</ul>
+<h2 id="单行回复"><a href="#单行回复" class="headerlink" title="单行回复"></a>单行回复</h2><p>以 “+” 开头，以 “\r\n” 结尾的字符串形式。e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">+OK\r\n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p>响应的客户端库，应该返回除 “+” 和 CRLF 以外的内容，例如上面的内容，则返回 “OK”. e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; set name JintaoZhang
++OK\r\n  # 服务端实际返回
+---
+OK   # redis-cli 客户端显示<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><p>错误信息和单行回复很像，不过是把 “+” 替换成了 “-“。而这两者之间真正的区别是，错误信息会被客户端视为异常，并且组成错误类型的是错误消息本身。e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">-Error message\r\n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>网络编程</p>
-<pre class="line-numbers language-none"><code class="language-none">1. 高并发（每秒钟上千数万的单机访问量）
-2. Request/Response。程序生命期端（毫秒，秒级）
-3. 高IO，低计算（连接数据库，请求API）。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>错误信息只在有错误发生的时候才会发送，比如数据类型错误，语法错误，或者命令不存在之类的。而当接收到错误信息的时候，客户端库应该抛出一个异常。e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; JintaoZhang
+-ERR unknown command 'JintaoZhang'\r\n  # 服务端实际返回, 下同
+---
+(error) ERR unknown command 'JintaoZhang'  # redis-cli 客户端显示, 下同
 
-<p>协程（coroutine）是Go语言中的轻量级线程实现，由Go运行时（runtime）管理</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Add</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    z <span class="token operator">:=</span> x <span class="token operator">+</span> y
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>z<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">for</span>  i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-	<span class="token keyword">go</span>  <span class="token function">Add</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+127.0.0.1:6379&gt; set name JintaoZhang moelove
+-ERR syntax error\r\n
+---
+(error) ERR syntax error<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在一个函数调用前加上go关键字，这次调用就会在一个新的goroutine中并发执行。当被调用的函数返回时，这个goroutine也自动结束。需要注意的是，如果这个函数有返回值，那么这个返回值会被丢弃。</p>
-<p>并发通信模型：<strong>共享内存</strong> 和 <strong>消息</strong></p>
-<p>Go 语言主要使用消息机制（channel）来作为通信模型</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
- 
-<span class="token keyword">import</span> <span class="token punctuation">(</span>
-    <span class="token string">"fmt"</span>
-    <span class="token string">"sync"</span>
-    <span class="token string">"runtime"</span>
-<span class="token punctuation">)</span>
- 
-<span class="token keyword">var</span> counter <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">0</span>
- 
-<span class="token keyword">func</span> <span class="token function">Count</span><span class="token punctuation">(</span>lock <span class="token operator">*</span>sync<span class="token punctuation">.</span>Mutex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    lock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 上锁</span>
-    counter<span class="token operator">++</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"counter ="</span><span class="token punctuation">,</span> counter<span class="token punctuation">)</span>
-    lock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// 解锁</span>
-<span class="token punctuation">}</span>
- 
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    lock <span class="token operator">:=</span> <span class="token operator">&amp;</span>sync<span class="token punctuation">.</span>Mutex<span class="token punctuation">{</span><span class="token punctuation">}</span>
- 
-    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-        <span class="token keyword">go</span> <span class="token function">Count</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">for</span> <span class="token punctuation">{</span>
-        lock<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 上锁</span>
-        c <span class="token operator">:=</span> counter
-        lock<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// 解锁</span>
- 
-        runtime<span class="token punctuation">.</span><span class="token function">Gosched</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 出让时间片</span>
- 
-        <span class="token keyword">if</span> c <span class="token operator">&gt;=</span> <span class="token number">10</span> <span class="token punctuation">{</span>
-            <span class="token keyword">break</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>这种类型只是只是使用以 “:” 作为前缀，以CRLF作为结尾的字符串来表示整数。e.g. “:666\r\n” 或者 “:999\r\n” 这种的都是整数回复。很多命令都会返回整数回复，例如 <code>INCR</code> <code>LLEN</code> <code>LPUSH</code> 之类的命令。但是多数情况下，返回的整数回复并没有过多实际含义，例如 <code>LPUSH</code> 就只是为了表示插入了几个值，但也有例如 <code>EXISTS</code> 命令是当结果为 true 的时候返回 1，false 返回 0 . e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; LPUSH info JintaoZhang MoeLove
+:2\r\n  # 服务端实际返回, 下同
+---
+(integer) 2  # redis-cli 客户端显示, 下同
 
-<p>资料：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/liang1101/p/7285955.html">https://www.cnblogs.com/liang1101/p/7285955.html</a></p>
+127.0.0.1:6379&gt; LLEN info
+:2\r\n
+---
+(integer) 2
+
+127.0.0.1:6379&gt; EXISTS info
+:1\r\n
+---
+(integer) 1
+
+127.0.0.1:6379&gt; DEL info
+:1\r\n
+---
+(integer) 1
+
+127.0.0.1:6379&gt; EXISTS info
+:0\r\n
+---
+(integer) 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="多行字符串"><a href="#多行字符串" class="headerlink" title="多行字符串"></a>多行字符串</h2><p>多行字符串被服务端用来返回长度最大为 512MB 的单个二进制安全的字符串。以 “$” 开头, 后跟实际要发送的字节数，随后是 CRLF，然后是实际的字符串数据，最后以 CRLF 结束。所以，例如我们要发送一个 “moelove.info” 的字符串，那它实际就被编码为 “$12\r\nmoelove.info\r\n”。而如果一个要发送一个空字符串，则会编码为 “$0\r\n\r\n” 。某些情况下，当要表示不存在的值时候，则以 “$-1\r\n” 返回，这被叫做空多行字符串，当客户端库接收到这个响应的时候，同样应该返回一个空值（例如 <code>nil</code>）而不是一个空字符串。e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; set site moelove.info
++OK\r\n  # 服务端实际返回, 下同
+---
+OK   # redis-cli 客户端显示, 下同
+
+127.0.0.1:6379&gt; get site
+$12\r\nmoelove.info\r\n
+---
+"moelove.info"
+
+127.0.0.1:6379&gt; del site
+:1\r\n
+---
+(integer) 1
+
+127.0.0.1:6379&gt; get site
+$-1\r\n
+---
+(nil)
+
+127.0.0.1:6379&gt; set site ''
++OK\r\n
+---
+OK
+
+127.0.0.1:6379&gt; get site
+$0\r\n\r\n
+---
+""<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组类型可用于客户端向服务端发送命令，同样的当某些命令将元素结合返回给客户端的时候，也是使用数组类型作为回复类型的。它以 “*” 开头，后面跟着返回元素的个数，随后是 CRLF, 再然后就是数组中各元素自己的类型了。最典型的是 <code>LRRANGE</code> 命令，返回一个列表中的元素。e.g.</p>
+<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; LPUSH info JintaoZhang moelove.info
+:2\r\n   # 服务端实际返回, 下同
+---
+(integer) 2  # redis-cli 客户端显示, 下同
+
+127.0.0.1:6379&gt; LRANGE info 0 -1
+*2\r\n$12\r\nmoelove.info\r\n$8\r\nJintaoZhang\r\n
+---
+1) "moelove.info"
+2) "JintaoZhang"
+
+127.0.0.1:6379&gt; LPOP info
+$12\r\nmoelove.info\r\n
+---
+"moelove.info"
+
+127.0.0.1:6379&gt; LPOP info
+$8\r\nJintaoZhang\r\n
+---
+"JintaoZhang"
+
+127.0.0.1:6379&gt; LRANGE info 0 -1
+*0\r\n
+---
+(empty list or set)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>RESP 协议还是相对易于理解的，另外理解了协议也方便对 Redis 一些问题的定位及客户端的实现。</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/topics/protocol">Redis Protocol specification</a></li>
+</ul>
 
                 
             </div>
@@ -509,7 +561,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://azture.github.io/2022/09/18/go-xie-cheng/">https://azture.github.io/2022/09/18/go-xie-cheng/</a>
+                    <a href="https://azture.github.io/2022/09/19/redis-de-resp-xie-yi/">https://azture.github.io/2022/09/19/redis-de-resp-xie-yi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -546,11 +598,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Go-%E5%8D%8F%E7%A8%8B/">
-                                    <span class="chip bg-color">Go 协程</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -627,9 +675,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/09/19/redis-de-resp-xie-yi/">
                     <div class="card-image">
@@ -647,9 +696,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -658,6 +707,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -668,13 +718,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/18/elastisearch/">
+                <a href="/2022/09/18/go-xie-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Elasticsearch">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Go协程">
                         
-                        <span class="card-title">Elasticsearch</span>
+                        <span class="card-title">Go协程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -691,8 +741,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Elasticsearch/" class="post-category">
-                                    Elasticsearch
+                            <a href="/categories/Go/" class="post-category">
+                                    Go
                                 </a>
                             
                             
@@ -702,8 +752,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Elasticsearch/">
-                        <span class="chip bg-color">Elasticsearch</span>
+                    <a href="/tags/Go-%E5%8D%8F%E7%A8%8B/">
+                        <span class="chip bg-color">Go 协程</span>
                     </a>
                     
                 </div>
